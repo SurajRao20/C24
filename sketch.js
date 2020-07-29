@@ -1,60 +1,63 @@
 const Engine = Matter.Engine;
-const World= Matter.World;
+const World = Matter.World;
 const Bodies = Matter.Bodies;
+const Body = Matter.Body;
 
-var engine, world;
-var box1;
-
-function setup(){
-    var canvas = createCanvas(1200,400);
-    engine = Engine.create();
-    world = engine.world;
-
-    ground = new Ground(600,height,1200,20)
-
-    box1 = new Box(700,320,70,70);
-    box2 = new Box(920,320,70,70);
-    pig1 = new Pig(810,320);
-    log1 = new Log(810,260,300,PI/2);
-
-    box3 = new Box(700,240,70,70);
-    box4 = new Box(920,240,70,70);
-    pig2 = new Pig(810,240);
-    log2 = new Log(810,180,300,PI/2);
-    
-    box5 = new Box(810,160,70,70);
-    log3 = new Log(790,120,150,PI/7);
-    log4 = new Log(840,120,150,-PI/7);
-
-    bird = new Bird(100,100);
-
+function preload()
+{
+	
 }
 
-function draw(){
-    background(0);
-    Engine.update(engine);
+function setup() {
+	createCanvas(2000, 700);
 
-    console.log(box2.body.position.x);
-    console.log(box2.body.position.y);
-    console.log(box2.body.angle);
 
-    ground.display();
+	engine = Engine.create();
+	world = engine.world;
 
-    box1.display();
-    box2.display();
-    pig1.display();
-    log1.display();
+	paperBall = new Ball(100,600,50)
+	World.add(world,paperBall);
 
-    box3.display();
-    box4.display();
-    pig2.display();
-    log2.display();
+	ground = new Ground(1000,700,2000,40,{isStatic:true})
+	World.add(world,ground);
 
-    box5.display();
-    log3.display();
-    log4.display();
+	trash1 = new Box(1720, 600, 20,150,{isStatic:true},{friction:5})
+	trash2 = new Box(1540, 600, 20,150,{isStatic:true},{friction:5})
+	trash3 = new Box1(1630, 670, 400,20,{isStatic:true},{friction:5})
 
-    bird.display();
-    
 
+	Engine.run(engine);
+  
 }
+
+
+function draw() {
+  rectMode(CENTER);
+  background(0);
+  
+  keyPressed();
+  drawSprites();
+
+  paperBall.display();
+  ground.display();
+
+  trash1.display();
+  trash2.display();
+  trash3.display();
+
+ 
+}
+
+function keyPressed() {
+		if (keyCode === UP_ARROW) {
+			
+			Matter.Body.applyForce(paperBall.body,paperBall.body.position,{x:25,y:-25});
+
+
+
+
+		}
+}
+
+
+
